@@ -188,13 +188,14 @@ end
 
 -- grabbed by a Locust: his neck would fill the view lying on his back - hidden on every mesh of his (ours too) while GRAB, shown
 -- again after (checked every frame, done on the change)
+-- (so are the forearm armour plates: the grab anim throws sc_forearmarmor ~1 m off the forearm, stretched to the floor on Dom)
 local grab_neck = false
 local function grab_neck_update(pawn)
     if (GRAB and true or false) == grab_neck or hidden_for ~= pawn then return end
     grab_neck = GRAB and true or false
     pcall(function()
         for _, m in ipairs(ucall(pawn, "K2_GetComponentsByClass", skeletal_mesh_c) or {}) do
-            for _, b in ipairs({ "b_neck", "twist_neck_01", "twist_neck_02" }) do
+            for _, b in ipairs({ "b_neck", "twist_neck_01", "twist_neck_02", "sc_forearmarmor_L", "sc_forearmarmor_R" }) do
                 local bn = ucall(kismet_string, "Conv_StringToName", b)
                 if grab_neck then pcall(function() ucall(m, "HideBoneByName", bn, 0) end) else pcall(function() ucall(m, "UnHideBoneByName", bn) end) end
             end
